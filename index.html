@@ -3,143 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RUSTICOS | Concept Burger Experience</title>
+    <title>RUSTICOS | Premium Burgers</title>
     
     <link rel="icon" type="image/png" href="img/logo.png">
-    <meta name="theme-color" content="#0a0a0a">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="Gastronomia Brutalista. Hambúrgueres artesanais feitos na brasa.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Manrope:wght@300;400;600&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@300;400;600;800&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="loading">
+<body>
 
-    <div class="cursor-dot"></div>
-    <div class="cursor-circle"></div>
+    <div class="modal-overlay" id="productModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content" id="modalContent">
+            <button class="modal-close" aria-label="Fechar Detalhes"><i class="fa-solid fa-times"></i></button>
+            
+            <div class="modal-grid">
+                <div class="modal-img-wrapper">
+                    <img src="" alt="" id="modalImg" draggable="false">
+                </div>
+                <div class="modal-info">
+                    <span class="modal-cat" id="modalCat"></span>
+                    <h2 class="modal-title" id="modalTitle"></h2>
+                    <p class="modal-desc" id="modalDesc"></p>
+                    <div class="modal-badges" id="modalBadges"></div>
+                </div>
+            </div>
+
+            <div class="modal-footer-sticky">
+                <div class="price-box">
+                    <span style="font-size: 0.8rem; display:block; color:#888;">Valor</span>
+                    <span class="modal-price-sticky" id="modalPrice"></span>
+                </div>
+                <div class="cta-box">
+                    <a href="#" class="btn-whatsapp" id="modalBtn" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-whatsapp"></i> 
+                        <span>PEDIR AGORA</span>
+                    </a>
+                    <span class="trust-text"><i class="fa-solid fa-shield-halved"></i> Compra Segura via WhatsApp</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="noise-bg"></div>
 
     <div class="preloader">
-        <div class="preloader-logo">
-            <span class="letter">R</span><span class="letter">U</span><span class="letter">S</span><span class="letter">T</span><span class="letter">I</span><span class="letter">C</span><span class="letter">O</span><span class="letter">S</span>
-        </div>
-        <div class="loading-bar-wrapper">
-            <div class="loading-bar"></div>
-        </div>
+        <img src="img/logo.png" alt="Carregando Rusticos" class="loader-img">
     </div>
 
-    <div class="brand-fixed">
-        RUSTICOS<span class="dot">.</span>
-    </div>
-
-    <div class="menu-toggle magnetic-wrap">
-        <div class="magnetic-area burger-icon">
-            <span></span>
-            <span></span>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo-link" aria-label="Ir para o início">
+                <img src="img/logo.png" alt="Rusticos Logo" class="nav-logo">
+            </a>
+            <div class="nav-links">
+                <a href="#hero">Início</a>
+                <a href="#about">Conceito</a>
+                <a href="#menu" class="active-link">Cardápio</a>
+                <a href="#location">Local</a>
+            </div>
+            <a href="#menu" class="btn-primary" aria-label="Ir para o cardápio">PEDIR AGORA</a>
         </div>
-    </div>
-
-    <div class="nav-overlay">
-        <nav>
-            <a href="#hero" class="nav-link">Início</a>
-            <a href="#about" class="nav-link">A Essência</a>
-            <a href="#menu" class="nav-link">O Acervo</a>
-            <a href="#location" class="nav-link">Localização</a>
-        </nav>
-    </div>
+    </nav>
 
     <main id="smooth-wrapper">
         
-        <section id="hero" class="hero-section">
-            <div class="hero-bg-media">
-                <img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?q=80&w=2071&auto=format&fit=crop" alt="Background Texture">
-                <div class="overlay-gradient"></div>
-            </div>
-            
-            <div class="container hero-container">
-                <div class="hero-text-wrapper">
-                    <h1 class="hero-title" data-speed="0.2">
-                        <div class="line">GASTRONOMIA</div>
-                        <div class="line italic-accent">Brutalista</div>
-                    </h1>
-                    <p class="hero-subtitle reveal-text">Onde a brasa encontra a arte. Sem frescura. Apenas sabor.</p>
+        <section id="hero" class="hero">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <div class="hero-header-group reveal-hero">
+                        <span class="badge-year">EST. 2025</span>
+                        <div class="line-acc"></div>
+                    </div>
+                    
+                    <div class="hero-title-wrapper reveal-hero">
+                        <h1 class="hero-title">
+                            GASTRONOMIA <br>
+                            <span class="text-outline">BRUTALISTA</span>
+                        </h1>
+                    </div>
+                    
+                    <p class="hero-desc reveal-hero">
+                        Onde a brasa encontra a arte. Sem frescura, apenas ingredientes nobres e técnica apurada.
+                    </p>
+                    
+                    <div class="hero-actions reveal-hero">
+                        <a href="#menu" class="btn-primary">VER BURGERS</a>
+                        <a href="#about" class="btn-secondary">CONHECER</a>
+                    </div>
                 </div>
                 
-                <div class="scroll-indicator">
-                    <span>Scroll</span>
-                    <div class="line-down"></div>
-                </div>
-            </div>
-        </section>
+                <div class="hero-visual" id="heroVisual">
+                    <div class="visual-layers">
+                        <div class="smoke-effect"></div>
+                        <div class="deco-circle"></div>
+                        
+                        <div class="rotating-stamp">
+                            <svg viewBox="0 0 100 100" width="140" height="140" aria-hidden="true">
+                                <path id="circle" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none"/>
+                                <text font-size="11.5">
+                                    <textPath xlink:href="#circle">
+                                        RUSTICOS • ORIGINAL TASTE • PREMIUM •
+                                    </textPath>
+                                </text>
+                            </svg>
+                        </div>
 
-        <div class="marquee-wrapper" data-speed="0.1">
-            <div class="marquee-inner">
-                <span>RUSTICOS • CONCEPT BURGER • FIRE & BLOOD • AUTHENTIC TASTE • </span>
-                <span>RUSTICOS • CONCEPT BURGER • FIRE & BLOOD • AUTHENTIC TASTE • </span>
-            </div>
-        </div>
-
-        <section id="about" class="about-section">
-            <div class="container">
-                <div class="about-grid">
-                    <div class="about-text" data-speed="0.05">
-                        <span class="section-label">Manifesto</span>
-                        <h2 class="section-heading">NÃO SOMOS APENAS <br> UMA HAMBURGUERIA.</h2>
-                        <p class="body-text">Somos um movimento de resgate. Resgate do sabor original da carne, do fogo verdadeiro e da simplicidade sofisticada. Cada burger é arquitetado, não montado.</p>
-                        <p class="body-text">Localizados no coração da cidade, trazemos a atmosfera urbana crua misturada com a hospitalidade clássica.</p>
-                    </div>
-                    <div class="about-visual parallax-image-wrap">
-                        <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1000" class="parallax-img" alt="Chef Process">
-                        <div class="floating-badge">
-                            <span>Since 2025</span>
+                        <div class="hero-img-wrapper">
+                            <img src="img/hero-burger.png" alt="Burger Premium Signature" class="hero-img-floating" fetchpriority="high">
+                        </div>
+                        
+                        <div class="floating-tag-premium">
+                           <i class="fa-solid fa-crown"></i>
+                           <span>Signature 180g</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="menu" class="menu-showcase">
-            <div class="container">
-                <div class="menu-header">
-                    <h2 class="section-heading text-center">O ACERVO</h2>
-                    <p class="section-sub text-center">Nossas Obras de Arte Comestíveis</p>
-                </div>
+        <div class="ticker-wrap" aria-hidden="true">
+            <div class="ticker">
+                <div class="ticker-item">BURGER REAL • SEM FRESCURA • FOGO E BRASA • INGREDIENTES FRESCOS • </div>
+                <div class="ticker-item">BURGER REAL • SEM FRESCURA • FOGO E BRASA • INGREDIENTES FRESCOS • </div>
+            </div>
+        </div>
 
-                <div class="menu-grid">
+        <section id="about" class="section-padding">
+            <div class="container">
+                <div class="about-flex">
+                    <div class="about-text">
+                        <h2 class="section-title">NÃO SOMOS APENAS <br> UMA HAMBURGUERIA.</h2>
+                        <div class="divider"></div>
+                        <p>Somos um movimento de resgate do sabor original. Localizados no coração da cidade, trazemos a atmosfera urbana crua misturada com a hospitalidade clássica.</p>
+                        <ul class="features-list">
+                            <li><i class="fa-solid fa-fire"></i> Grelhado no Fogo</li>
+                            <li><i class="fa-solid fa-cow"></i> Carne Fresca Diária</li>
+                            <li><i class="fa-solid fa-wheat"></i> Pães Artesanais</li>
+                        </ul>
+                    </div>
+                    <div class="about-img">
+                        <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1000" alt="Cozinha Rusticos" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="menu" class="menu-section section-padding">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="subtitle">Nossas Obras</span>
+                    <h2 class="section-title">O ACERVO</h2>
+                    <p style="color: #666; margin-top: 10px;">Clique no produto para ver detalhes</p>
+                </div>
+                
+                <div class="filter-container" role="tablist" id="filterContainer">
+                    </div>
+                
+                <div class="menu-grid" id="menuGrid">
                     </div>
             </div>
         </section>
 
         <section id="location" class="location-section">
-            <div class="container location-container">
-                <div class="location-info">
-                    <h2 class="section-heading">ENCONTRO</h2>
-                    <address>
+             <div class="map-half">
+                <iframe title="Mapa Rusticos" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3833.9984954754!2d-47.9500!3d-16.2500!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTbCsDE1JzAwLjAiUyA0N8KwNTcnMDAuMCJX!5e0!3m2!1spt-BR!2sbr!4v1600000000000!5m2!1spt-BR!2sbr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div class="info-half">
+                <div class="info-content">
+                    <h2>VISITE A CASA</h2>
+                    <div class="info-block">
+                        <h3>Endereço</h3>
                         <p>Rua Rusticos, 666 - Setor Industrial</p>
                         <p>Luziânia - GO</p>
-                        <br>
-                        <p class="status open">Aberta agora • Fecha às 23:00</p>
-                    </address>
-                    <a href="#" class="btn-outline magnetic-wrap">
-                        <span class="magnetic-area">Traçar Rota</span>
-                    </a>
+                    </div>
+                    <div class="info-block">
+                        <h3>Horários</h3>
+                        <p>Aberto todos os dias</p>
+                        <p class="highlight">18:00 às 23:00</p>
+                    </div>
+                    <a href="#" class="btn-outline-dark">TRAÇAR ROTA</a>
                 </div>
-                <div class="map-frame">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3833.9984954754!2d-47.9500!3d-16.2500!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTbCsDE1JzAwLjAiUyA0N8KwNTcnMDAuMCJX!5e0!3m2!1spt-BR!2sbr!4v1600000000000!5m2!1spt-BR!2sbr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                    <div class="map-overlay"></div> </div>
             </div>
         </section>
 
         <footer class="main-footer">
             <div class="container">
-                <h2 class="footer-big-text">RUSTICOS</h2>
-                <div class="footer-bottom">
-                    <span>© 2025 Concept Burger.</span>
-                    <div class="socials">
-                        <a href="#">Instagram</a>
-                        <a href="#">WhatsApp</a>
+                <div class="footer-content">
+                    <img src="img/logo.png" alt="Rusticos" class="footer-logo">
+                    <div class="social-links">
+                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
                     </div>
+                    <p class="copyright">© 2025 RUSTICOS CONCEPT. Todos os direitos reservados.</p>
                 </div>
             </div>
         </footer>
@@ -149,8 +210,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
-    
     <script src="script.js"></script>
 </body>
 </html>
