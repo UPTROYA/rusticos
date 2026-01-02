@@ -13,7 +13,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@300;400;600;800&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -40,11 +39,11 @@
                     <span class="modal-price-sticky" id="modalPrice"></span>
                 </div>
                 <div class="cta-box">
-                    <a href="#" class="btn-whatsapp" id="modalBtn" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-brands fa-whatsapp"></i> 
-                        <span>PEDIR AGORA</span>
+                    <a href="https://pedido.anota.ai/loja/_rustico_burguer?f=ms" class="btn-whatsapp" id="modalBtn" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-solid fa-bag-shopping"></i> 
+                        <span>FAZER PEDIDO</span>
                     </a>
-                    <span class="trust-text"><i class="fa-solid fa-shield-halved"></i> Compra Segura via WhatsApp</span>
+                    <span class="trust-text"><i class="fa-solid fa-rocket"></i> Pedido Rápido via Anota Ai</span>
                 </div>
             </div>
         </div>
@@ -67,7 +66,7 @@
                 <a href="#menu" class="active-link">Cardápio</a>
                 <a href="#location">Local</a>
             </div>
-            <a href="#menu" class="btn-primary" aria-label="Ir para o cardápio">PEDIR AGORA</a>
+            <a href="https://pedido.anota.ai/loja/_rustico_burguer?f=ms" target="_blank" class="btn-primary" aria-label="Ir para o cardápio online">PEDIR ONLINE</a>
         </div>
     </nav>
 
@@ -93,7 +92,7 @@
                     </p>
                     
                     <div class="hero-actions reveal-hero">
-                        <a href="#menu" class="btn-primary">VER BURGERS</a>
+                        <a href="https://pedido.anota.ai/loja/_rustico_burguer?f=ms" target="_blank" class="btn-primary">PEDIR AGORA</a>
                         <a href="#about" class="btn-secondary">CONHECER</a>
                     </div>
                 </div>
@@ -101,9 +100,9 @@
                 <div class="hero-visual" id="heroVisual">
                     <div class="visual-layers">
                         <div class="smoke-effect"></div>
-                        <div class="deco-circle"></div>
+                        <div class="deco-circle" data-speed="0.05"></div>
                         
-                        <div class="rotating-stamp">
+                        <div class="rotating-stamp" data-speed="0.1">
                             <svg viewBox="0 0 100 100" width="140" height="140" aria-hidden="true">
                                 <path id="circle" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none"/>
                                 <text font-size="11.5">
@@ -114,11 +113,11 @@
                             </svg>
                         </div>
 
-                        <div class="hero-img-wrapper">
+                        <div class="hero-img-wrapper" id="heroImgWrapper">
                             <img src="img/hero-burger.png" alt="Burger Premium Signature" class="hero-img-floating" fetchpriority="high">
                         </div>
                         
-                        <div class="floating-tag-premium">
+                        <div class="floating-tag-premium" data-speed="0.2">
                            <i class="fa-solid fa-crown"></i>
                            <span>Signature 180g</span>
                         </div>
@@ -142,9 +141,18 @@
                         <div class="divider"></div>
                         <p>Somos um movimento de resgate do sabor original. Localizados no coração da cidade, trazemos a atmosfera urbana crua misturada com a hospitalidade clássica.</p>
                         <ul class="features-list">
-                            <li><i class="fa-solid fa-fire"></i> Grelhado no Fogo</li>
-                            <li><i class="fa-solid fa-cow"></i> Carne Fresca Diária</li>
-                            <li><i class="fa-solid fa-wheat"></i> Pães Artesanais</li>
+                            <li>
+                                <div class="feat-icon"><i class="fa-solid fa-fire"></i></div>
+                                <span>Grelhado no Fogo</span>
+                            </li>
+                            <li>
+                                <div class="feat-icon"><i class="fa-solid fa-cow"></i></div>
+                                <span>Carne Fresca Diária</span>
+                            </li>
+                            <li>
+                                <div class="feat-icon"><i class="fa-solid fa-wheat"></i></div>
+                                <span>Pães Artesanais</span>
+                            </li>
                         </ul>
                     </div>
                     <div class="about-img">
@@ -159,14 +167,11 @@
                 <div class="section-header text-center">
                     <span class="subtitle">Nossas Obras</span>
                     <h2 class="section-title">O ACERVO</h2>
-                    <p style="color: #666; margin-top: 10px;">Clique no produto para ver detalhes</p>
                 </div>
                 
-                <div class="filter-container" role="tablist" id="filterContainer">
-                    </div>
+                <div class="filter-container" role="tablist" id="filterContainer"></div>
                 
-                <div class="menu-grid" id="menuGrid">
-                    </div>
+                <div class="menu-grid" id="menuGrid"></div>
             </div>
         </section>
 
@@ -179,15 +184,15 @@
                     <h2>VISITE A CASA</h2>
                     <div class="info-block">
                         <h3>Endereço</h3>
-                        <p>Rua Rusticos, 666 - Setor Industrial</p>
+                        <p>Rua senador Gonzaga Jaime, quadra 67 - lote 16b N 63 Luziânia Goiás - 72810-080</p>
                         <p>Luziânia - GO</p>
                     </div>
                     <div class="info-block">
                         <h3>Horários</h3>
                         <p>Aberto todos os dias</p>
-                        <p class="highlight">18:00 às 23:00</p>
+                        <p class="highlight">17:00 às 23:00</p>
                     </div>
-                    <a href="#" class="btn-outline-dark">TRAÇAR ROTA</a>
+                    <a href="https://maps.google.com" target="_blank" class="btn-outline-dark">TRAÇAR ROTA</a>
                 </div>
             </div>
         </section>
@@ -197,8 +202,8 @@
                 <div class="footer-content">
                     <img src="img/logo.png" alt="Rusticos" class="footer-logo">
                     <div class="social-links">
-                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/5561910181201?partnertoken=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJHb29nbGUiLCJleHAiOjE3NjczNjY4MTUsInVybCI6Imh0dHBzOi8vd2EubWUvNTU2MTkxMDE4MTIwMSIsImlhdCI6MTc2NzM2NjUxNX0.Jo5ImwgwNQDbzUkekqQ94wUiZUxnKXUDdLyQz0rtf_X5eKzChkDwA5lQ6CXTPj7A1EWBA7xo_dAqHB3K4LDPHw" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
                     </div>
                     <p class="copyright">© 2025 RUSTICOS CONCEPT. Todos os direitos reservados.</p>
                 </div>

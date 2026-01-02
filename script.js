@@ -1,28 +1,26 @@
 /**
- * RUSTICOS CORE - HERO REFACTOR & FIXES
- * Foco: Impacto Visual Controlado, Performance e UX
+ * RUSTICOS CORE
  */
 
 const CONFIG = {
-    whatsappNumber: "5561999999999", 
-    defaultCategory: 'burger', // OBRIGATÓRIO: Inicia na aba Burgers
+    defaultCategory: 'burger',
     currency: 'BRL',
     locale: 'pt-BR',
-    heroParallaxDelay: 1200, // 1.2s de espera para ativar parallax
-    heroTextSwapInterval: 8000 // 8s para troca de texto
+    heroParallaxDelay: 1200,
+    heroTextSwapInterval: 8000
 };
 
-// DADOS (Preços convertidos para Number conforme solicitado)
+// DADOS (Preços convertidos para Number)
 const menuItems = [
-    { id: 1, type: "burger", price: 32.90, name: "Clássico", cat: "Signature", desc: "O clássico pão brioche, hambúrguer 180g, queijo, bacon de respeito e maionese da casa.", img: "img/clássico.jpg", badges: ["Clássico"], isBestSeller: false },
-    { id: 2, type: "burger", price: 36.90, name: "Rústico", cat: "Best Seller", desc: "Pão brioche, Hambúrguer artesanal 180g, coberto com American Cheese, cebola caramelizada, farofa de bacon e Doritos.", img: "img/Rustico.jpg", badges: ["Mais Vendido", "Crocante"], isBestSeller: true },
-    { id: 3, type: "burger", price: 38.90, name: "Sistemático", cat: "Concept", desc: "Pão brioche, carne artesanal 180g, cheddar, bacon no melaço de cana e molho picante.", img: "img/sistematico.jpg", badges: ["Picante"], isBestSeller: false },
-    { id: 4, type: "burger", price: 42.90, name: "Sertanejo", cat: "Special", desc: "Pão brioche, blend 250g, 4 queijos, ovo, bacon e molhos da casa.", img: "img/sertanejo.jpg", badges: ["Exclusivo"], isBestSeller: false },
-    { id: 5, type: "burger", price: 45.90, name: "Bruto", cat: "Monster", desc: "Pão com gergelim, dois burgers 180g, cheddar, tiras de bacon e cebola crispy.", img: "img/bruto.jpg", badges: ["Para Fome Grande"], isBestSeller: false },
-    { id: 6, type: "burger", price: 28.90, name: "Doce Burger", cat: "Sweet", desc: "Pão brioche, burger 180g, queijo prato, doce de leite cremoso e farofa de bacon.", img: "img/doce.jpg", badges: ["Sobremesa"], isBestSeller: false },
-    { id: 7, type: "burger", price: 26.90, name: "Pit", cat: "Local", desc: "Abacaxi selado, carne 100g, mussarela, ovo, alface, tomate, bacon, milho e batata palha.", img: "img/pit.jpg", badges: [], isBestSeller: false },
-    { id: 8, type: "burger", price: 30.90, name: "Salada Bacon", cat: "Fresh", desc: "Pão brioche, alface, tomate, blend 180g, mussarela derretida e bacon crocante.", img: "img/saladabacon.jpg", badges: ["Leve"], isBestSeller: false },
-    { id: 9, type: "burger", price: 34.90, name: "Galo Bravo", cat: "Chicken", desc: "Pão brioche, 180g de frango empanado com queijo, bacon e maionese.", img: "img/galobravo.jpg", badges: ["Frango"], isBestSeller: false },
+    { id: 1, type: "burger", price: 32.90, name: "Clássico", cat: "Signature", desc: "O clássico pão brioche, hambúrguer 180g, queijo, bacon de respeito e maionese da casa.", img: "img/clássico.png", badges: ["Clássico"], isBestSeller: false },
+    { id: 2, type: "burger", price: 36.90, name: "Rústico", cat: "Best Seller", desc: "Pão brioche, Hambúrguer artesanal 180g, coberto com American Cheese, cebola caramelizada, farofa de bacon e Doritos.", img: "img/Rustico.png", badges: ["Mais Vendido", "Crocante"], isBestSeller: true },
+    { id: 3, type: "burger", price: 38.90, name: "Sistemático", cat: "Concept", desc: "Pão brioche, carne artesanal 180g, cheddar, bacon no melaço de cana e molho picante.", img: "img/sistematico.png", badges: ["Picante"], isBestSeller: false },
+    { id: 4, type: "burger", price: 42.90, name: "Sertanejo", cat: "Special", desc: "Pão brioche, blend 250g, 4 queijos, ovo, bacon e molhos da casa.", img: "img/sertanejo.png", badges: ["Exclusivo"], isBestSeller: false },
+    { id: 5, type: "burger", price: 45.90, name: "Bruto", cat: "Monster", desc: "Pão com gergelim, dois burgers 180g, cheddar, tiras de bacon e cebola crispy.", img: "img/bruto.png", badges: ["Para Fome Grande"], isBestSeller: false },
+    { id: 6, type: "burger", price: 28.90, name: "Doce Burger", cat: "Sweet", desc: "Pão brioche, burger 180g, queijo prato, doce de leite cremoso e farofa de bacon.", img: "img/doce.png", badges: ["Sobremesa"], isBestSeller: false },
+    { id: 7, type: "burger", price: 26.90, name: "Pit", cat: "Local", desc: "Abacaxi selado, carne 100g, mussarela, ovo, alface, tomate, bacon, milho e batata palha.", img: "img/pit.png", badges: [], isBestSeller: false },
+    { id: 8, type: "burger", price: 30.90, name: "Salada Bacon", cat: "Fresh", desc: "Pão brioche, alface, tomate, blend 180g, mussarela derretida e bacon crocante.", img: "img/salada.png", badges: ["Leve"], isBestSeller: false },
+    { id: 9, type: "burger", price: 34.90, name: "Galo Bravo", cat: "Chicken", desc: "Pão brioche, 180g de frango empanado com queijo, bacon e maionese.", img: "img/galo.png", badges: ["Frango"], isBestSeller: false },
     { id: 10, type: "portion", price: 18.90, name: "Batata 500g", cat: "Acompanhamento", desc: "500g de batata in natura frita rústica.", img: "img/batata500.jpg", badges: ["Compartilhar"], isBestSeller: true },
     { id: 11, type: "portion", price: 10.90, name: "Batata 150g", cat: "Acompanhamento", desc: "150g Batata In natura, porção individual.", img: "img/batata150.jpg", badges: [], isBestSeller: false },
     { id: 12, type: "portion", price: 22.90, name: "Discos", cat: "Entrada", desc: "100g de carne recheada com queijo e empanada.", img: "img/discos.jpg", badges: ["Entrada"], isBestSeller: false },
@@ -30,7 +28,6 @@ const menuItems = [
 
 /* --- UTILS --- */
 const Utils = {
-    // FUNÇÃO OBRIGATÓRIA DE FORMATAÇÃO
     formatPrice: (value) => {
         return value.toLocaleString(CONFIG.locale, {
             style: 'currency',
@@ -42,11 +39,6 @@ const Utils = {
         const div = document.createElement('div');
         div.textContent = str;
         return div.innerHTML;
-    },
-
-    createWhatsAppMessage: (item) => {
-        const text = `Olá! Gostaria de fazer um pedido:\n\n🍔 *${item.name}*\n💰 ${Utils.formatPrice(item.price)}\n\n(Enviado pelo Cardápio Digital)`;
-        return `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(text)}`;
     },
 
     renderBadges: (badges) => {
@@ -64,8 +56,8 @@ const Utils = {
 const AppState = {
     currentCategory: CONFIG.defaultCategory,
     isModalOpen: false,
-    heroVisible: true, // Controla IntersectionObserver
-    allowParallax: false // Controla Delay Inicial
+    heroVisible: true, 
+    allowParallax: false 
 };
 
 /* --- DOM ELEMENTS --- */
@@ -95,7 +87,7 @@ const DOM = {
 const MenuSystem = {
     init() {
         this.renderFilters();
-        this.renderGrid(CONFIG.defaultCategory); // Inicia renderizando Burgers
+        this.renderGrid(CONFIG.defaultCategory);
         this.setupDelegation();
     },
 
@@ -129,7 +121,7 @@ const MenuSystem = {
                 <div class="card-img">
                     <div class="card-badges">${Utils.renderBadges(item.badges)}</div>
                     <img src="${item.img}" alt="${Utils.sanitize(item.name)}" loading="lazy" 
-                         onerror="this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=600'">
+                           onerror="this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=600'">
                 </div>
                 <div class="card-content">
                     <span class="card-cat">${Utils.sanitize(item.cat)}</span>
@@ -193,7 +185,10 @@ const ModalSystem = {
         DOM.modal.title.textContent = item.name;
         DOM.modal.desc.textContent = item.desc;
         DOM.modal.price.textContent = Utils.formatPrice(item.price);
-        DOM.modal.btn.href = Utils.createWhatsAppMessage(item);
+        
+        // Mantemos o href fixo para Anota Ai que já está no HTML
+        // DOM.modal.btn.href = ... (já definido no HTML para Anota Ai)
+        
         DOM.modal.badges.innerHTML = Utils.renderBadges(item.badges);
 
         DOM.modal.overlay.classList.add('active');
@@ -209,7 +204,7 @@ const ModalSystem = {
     }
 };
 
-/* --- COMPONENT: HERO & VISUALS (O foco principal) --- */
+/* --- COMPONENT: HERO & VISUALS --- */
 const VisualController = {
     init() {
         this.setupLenis();
@@ -242,42 +237,34 @@ const VisualController = {
     setupHeroAnimations() {
         if(typeof gsap === 'undefined') return;
 
-        // 1. TIMELINE DE REVELAÇÃO (Texto Primeiro -> Imagem Depois)
         const tl = gsap.timeline();
 
-        // Animação dos Textos
         tl.from(".reveal-hero", { 
             y: 30, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out", delay: 0.2 
         });
 
-        // Animação Específica da Imagem (Blur -> Foco)
         if(DOM.hero.img) {
             tl.fromTo(DOM.hero.img, 
-                { scale: 1.08, opacity: 0, filter: 'blur(6px)' }, // Estado Inicial
-                { scale: 1, opacity: 1, filter: 'blur(0px)', duration: 1.2, ease: "power3.out" }, // Estado Final
-                "-=0.4" // Leve sobreposição com o texto
+                { scale: 1.08, opacity: 0, filter: 'blur(6px)' }, 
+                { scale: 1, opacity: 1, filter: 'blur(0px)', duration: 1.2, ease: "power3.out" }, 
+                "-=0.4"
             );
         }
 
-        // 2. CONTROLE DO PARALLAX (Delay + Viewport)
-        // Ativa Parallax apenas após o tempo definido
         setTimeout(() => { AppState.allowParallax = true; }, CONFIG.heroParallaxDelay);
 
         if(window.matchMedia("(hover: hover)").matches && DOM.hero.section) {
             DOM.hero.section.addEventListener('mousemove', (e) => {
-                // Só executa se: Delay passou E Hero está visível
                 if(!AppState.allowParallax || !AppState.heroVisible) return;
 
                 const x = (e.clientX / window.innerWidth - 0.5);
                 const y = (e.clientY / window.innerHeight - 0.5);
 
-                // Movimento suave
                 gsap.to('.hero-img-floating', { x: x * 20, y: y * 20, duration: 0.8, ease: "power1.out" });
                 gsap.to('.rotating-stamp', { x: x * -10, y: y * -10, duration: 0.8, ease: "power1.out" });
             });
         }
 
-        // 3. INTERSECTION OBSERVER (Performance)
         if(DOM.hero.section && typeof IntersectionObserver !== 'undefined') {
             const observer = new IntersectionObserver((entries) => {
                 AppState.heroVisible = entries[0].isIntersecting;
@@ -285,18 +272,16 @@ const VisualController = {
             observer.observe(DOM.hero.section);
         }
 
-        // 4. MICRO-VARIAÇÃO (Texto Flutuante)
         if(DOM.hero.tagText) {
             const texts = ["Signature 180g", "Blend Exclusivo", "Carne 100% Angus"];
             let index = 0;
             
             setInterval(() => {
-                if(!AppState.heroVisible) return; // Não anima se não estiver vendo
+                if(!AppState.heroVisible) return; 
                 
                 index = (index + 1) % texts.length;
                 const newText = texts[index];
                 
-                // Troca suave
                 gsap.to(DOM.hero.tagText, { opacity: 0, duration: 0.5, onComplete: () => {
                     DOM.hero.tagText.textContent = newText;
                     gsap.to(DOM.hero.tagText, { opacity: 1, duration: 0.5 });
@@ -306,7 +291,6 @@ const VisualController = {
     }
 };
 
-// INICIALIZAÇÃO
 document.addEventListener("DOMContentLoaded", () => {
     MenuSystem.init();
     ModalSystem.init();
