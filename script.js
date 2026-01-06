@@ -79,7 +79,8 @@ const DOM = {
     hero: {
         section: document.getElementById('hero'),
         img: document.querySelector('.hero-img-floating'),
-        tagText: document.querySelector('.floating-tag-premium span:nth-child(2)')
+        // Atualizado para o novo seletor da tag flutuante
+        tagText: document.querySelector('.float-tag span')
     }
 };
 
@@ -185,10 +186,6 @@ const ModalSystem = {
         DOM.modal.title.textContent = item.name;
         DOM.modal.desc.textContent = item.desc;
         DOM.modal.price.textContent = Utils.formatPrice(item.price);
-        
-        // Mantemos o href fixo para Anota Ai que já está no HTML
-        // DOM.modal.btn.href = ... (já definido no HTML para Anota Ai)
-        
         DOM.modal.badges.innerHTML = Utils.renderBadges(item.badges);
 
         DOM.modal.overlay.classList.add('active');
@@ -239,13 +236,15 @@ const VisualController = {
 
         const tl = gsap.timeline();
 
+        // Animação de entrada dos elementos (Título e Info)
         tl.from(".reveal-hero", { 
             y: 30, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out", delay: 0.2 
         });
 
+        // Entrada da Imagem Principal
         if(DOM.hero.img) {
             tl.fromTo(DOM.hero.img, 
-                { scale: 1.08, opacity: 0, filter: 'blur(6px)' }, 
+                { scale: 1.1, opacity: 0, filter: 'blur(10px)' }, 
                 { scale: 1, opacity: 1, filter: 'blur(0px)', duration: 1.2, ease: "power3.out" }, 
                 "-=0.4"
             );
@@ -253,6 +252,7 @@ const VisualController = {
 
         setTimeout(() => { AppState.allowParallax = true; }, CONFIG.heroParallaxDelay);
 
+        // Parallax do Mouse
         if(window.matchMedia("(hover: hover)").matches && DOM.hero.section) {
             DOM.hero.section.addEventListener('mousemove', (e) => {
                 if(!AppState.allowParallax || !AppState.heroVisible) return;
@@ -270,23 +270,6 @@ const VisualController = {
                 AppState.heroVisible = entries[0].isIntersecting;
             }, { threshold: 0.1 });
             observer.observe(DOM.hero.section);
-        }
-
-        if(DOM.hero.tagText) {
-            const texts = ["Signature 180g", "Blend Exclusivo", "Carne 100% Angus"];
-            let index = 0;
-            
-            setInterval(() => {
-                if(!AppState.heroVisible) return; 
-                
-                index = (index + 1) % texts.length;
-                const newText = texts[index];
-                
-                gsap.to(DOM.hero.tagText, { opacity: 0, duration: 0.5, onComplete: () => {
-                    DOM.hero.tagText.textContent = newText;
-                    gsap.to(DOM.hero.tagText, { opacity: 1, duration: 0.5 });
-                }});
-            }, CONFIG.heroTextSwapInterval);
         }
     }
 };
