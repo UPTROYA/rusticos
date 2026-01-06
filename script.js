@@ -12,18 +12,18 @@ const CONFIG = {
 
 // DADOS (Preços convertidos para Number)
 const menuItems = [
-    { id: 1, type: "burger", price: 32.90, name: "Clássico", cat: "Signature", desc: "O clássico pão brioche, hambúrguer 180g, queijo, bacon de respeito e maionese da casa.", img: "img/clássico.png", badges: ["Clássico"], isBestSeller: false },
-    { id: 2, type: "burger", price: 36.90, name: "Rústico", cat: "Best Seller", desc: "Pão brioche, Hambúrguer artesanal 180g, coberto com American Cheese, cebola caramelizada, farofa de bacon e Doritos.", img: "img/Rustico.png", badges: ["Mais Vendido", "Crocante"], isBestSeller: true },
-    { id: 3, type: "burger", price: 38.90, name: "Sistemático", cat: "Concept", desc: "Pão brioche, carne artesanal 180g, cheddar, bacon no melaço de cana e molho picante.", img: "img/sistematico.png", badges: ["Picante"], isBestSeller: false },
-    { id: 4, type: "burger", price: 42.90, name: "Sertanejo", cat: "Special", desc: "Pão brioche, blend 250g, 4 queijos, ovo, bacon e molhos da casa.", img: "img/sertanejo.png", badges: ["Exclusivo"], isBestSeller: false },
-    { id: 5, type: "burger", price: 45.90, name: "Bruto", cat: "Monster", desc: "Pão com gergelim, dois burgers 180g, cheddar, tiras de bacon e cebola crispy.", img: "img/bruto.png", badges: ["Para Fome Grande"], isBestSeller: false },
-    { id: 6, type: "burger", price: 28.90, name: "Doce Burger", cat: "Sweet", desc: "Pão brioche, burger 180g, queijo prato, doce de leite cremoso e farofa de bacon.", img: "img/doce.png", badges: ["Sobremesa"], isBestSeller: false },
-    { id: 7, type: "burger", price: 26.90, name: "Pit", cat: "Local", desc: "Abacaxi selado, carne 100g, mussarela, ovo, alface, tomate, bacon, milho e batata palha.", img: "img/pit.png", badges: [], isBestSeller: false },
-    { id: 8, type: "burger", price: 30.90, name: "Salada Bacon", cat: "Fresh", desc: "Pão brioche, alface, tomate, blend 180g, mussarela derretida e bacon crocante.", img: "img/salada.png", badges: ["Leve"], isBestSeller: false },
-    { id: 9, type: "burger", price: 34.90, name: "Galo Bravo", cat: "Chicken", desc: "Pão brioche, 180g de frango empanado com queijo, bacon e maionese.", img: "img/galo.png", badges: ["Frango"], isBestSeller: false },
-    { id: 10, type: "portion", price: 18.90, name: "Batata 500g", cat: "Acompanhamento", desc: "500g de batata in natura frita rústica.", img: "img/batata500.jpg", badges: ["Compartilhar"], isBestSeller: true },
-    { id: 11, type: "portion", price: 10.90, name: "Batata 150g", cat: "Acompanhamento", desc: "150g Batata In natura, porção individual.", img: "img/batata150.jpg", badges: [], isBestSeller: false },
-    { id: 12, type: "portion", price: 22.90, name: "Discos", cat: "Entrada", desc: "100g de carne recheada com queijo e empanada.", img: "img/discos.jpg", badges: ["Entrada"], isBestSeller: false },
+    { id: 1, type: "burger", price: 29.99, name: "Clássico", cat: "Signature", desc: "O clássico pão brioche, hambúrguer 180g, queijo, bacon de respeito e maionese da casa pra fechar com chave de ouro.", img: "img/clássico.png", badges: ["Clássico"], isBestSeller: false },
+    { id: 2, type: "burger", price: 35.99, name: "Rústico", cat: "Best Seller", desc: "Pão brioche, Hambúrguer artesanal 180g, coberto com American Cheese, cebola caramelizada, farofa de bacon e Doritos.", img: "img/Rustico.png", badges: ["Mais Vendido", "Crocante"], isBestSeller: true },
+    { id: 3, type: "burger", price: 32.99, name: "Sistemático", cat: "Concept", desc: "Um hambúrguer que é puro sistema: pão brioche fofinho, carne artesanal 180g suculenta, cheddar derretido, bacon caramelizado no melaço de cana (aquele docinho irresistível) e o molho especial da casa com uma picância de leve.", img: "img/sistematico.png", badges: ["Picante"], isBestSeller: false },
+    { id: 4, type: "burger", price: 37.99, name: "Sertanejo", cat: "Special", desc: "Pão brioche, blend 250g, 4 queijos, ovo, bacon e molhos da casa.", img: "img/sertanejo.png", badges: ["Exclusivo"], isBestSeller: false },
+    { id: 5, type: "burger", price: 42.99, name: "Bruto", cat: "Monster", desc: "Pão brioche com gergelim, dois hambúrgueres de 180g, cheddar derretido, tiras crocantes de bacon, maionese da casa e cebola crispy.", img: "img/bruto.png", badges: ["Para Fome Grande"], isBestSeller: false },
+    { id: 6, type: "burger", price: 32.99, name: "Doce Burger", cat: "Sweet", desc: "Pão brioche macio, burger de 180g selado na chapa, duas fatias de queijo prato derretido, doce de leite cremoso e farofa crocante de bacon. Uma combinação marcante de doce, salgado e crocância.", img: "img/doce.png", badges: ["Sobremesa"], isBestSeller: false },
+    { id: 7, type: "burger", price: 29.99, name: "Pit - O podrão à moda Goiâna", cat: "Local", desc: "A nossa releitura do clássico goiano: pão macio, abacaxi selado na chapa, carne artesanal de 100g, queijo mussarela derretido, ovo na chapa, alface crocante, tomate fresco, bacon dourado, milho verde e uma chuva de batata palha pra fechar no estilo.", img: "img/pit.png", badges: [], isBestSeller: false },
+    { id: 8, type: "burger", price: 32.99, name: "Salada Bacon", cat: "Fresh", desc: "Pão brioche, alface americana crocante, tomate em fatias, blend artesanal 180g, mussarela derretida e bacon crocante.", img: "img/salada.png", badges: ["Leve"], isBestSeller: false },
+    { id: 9, type: "burger", price: 31.99, name: "Galo Bravo", cat: "Chicken", desc: "Pão brioche fofinho abraçando 180g de peito de frango empanado, suculento e recheado com queijo. Por cima, duas fatias de queijo derretendo, bacon crocante e aquela maionese que fecha o combo com chave de ouro. Um sanduíche ousado, crocante e carregado de sabor.", img: "img/galo.png", badges: ["Frango"], isBestSeller: false },
+    { id: 10, type: "portion", price: 20.00, name: "Batata 500g", cat: "Acompanhamento", desc: "500g de batata in natura.", img: "img/batata500.jpg", badges: ["Compartilhar"], isBestSeller: true },
+    { id: 11, type: "portion", price: 6.00, name: "Batata 150g", cat: "Acompanhamento", desc: "150g de batata In natura.", img: "img/batata150.jpg", badges: [], isBestSeller: false },
+    { id: 12, type: "portion", price: 20.00, name: "Discos Rústicos", cat: "Entrada", desc: "100g de carne moída moldada no formato de um disquinho, recheada com 3 fatias de queijo bem derretido e duplamente empanada pra ficar crocante de verdade. Por fora, casquinha dourada; por dentro, queijo transbordando. Um petisco simples, rústico e viciante.", img: "img/discos.jpg", badges: ["Entrada"], isBestSeller: false },
 ];
 
 /* --- UTILS --- */
@@ -96,7 +96,7 @@ const MenuSystem = {
         const categories = [
             { id: 'burger', label: 'Burgers', icon: 'fa-burger' },
             { id: 'portion', label: 'Porções', icon: 'fa-bowl-food' },
-            { id: 'all', label: 'Todos', icon: 'fa-border-all' }
+            
         ];
 
         DOM.filters.innerHTML = categories.map(cat => `
