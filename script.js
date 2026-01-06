@@ -79,7 +79,6 @@ const DOM = {
     hero: {
         section: document.getElementById('hero'),
         img: document.querySelector('.hero-img-floating'),
-        // Atualizado para o novo seletor da tag flutuante
         tagText: document.querySelector('.float-tag span')
     }
 };
@@ -252,7 +251,7 @@ const VisualController = {
 
         setTimeout(() => { AppState.allowParallax = true; }, CONFIG.heroParallaxDelay);
 
-        // Parallax do Mouse
+        // Parallax do Mouse (Desativado em mobile via CSS pointer-events ou lógica aqui)
         if(window.matchMedia("(hover: hover)").matches && DOM.hero.section) {
             DOM.hero.section.addEventListener('mousemove', (e) => {
                 if(!AppState.allowParallax || !AppState.heroVisible) return;
@@ -278,4 +277,42 @@ document.addEventListener("DOMContentLoaded", () => {
     MenuSystem.init();
     ModalSystem.init();
     VisualController.init();
+
+    /* --- MOBILE MENU LOGIC (ADICIONADO) --- */
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const navLinks = document.querySelectorAll('.mobile-menu a');
+
+    if (mobileToggle && mobileMenu) {
+        // Toggle Menu ao clicar no botão
+        mobileToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); // Impede clique fantasma
+            mobileToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            
+            // Travar scroll do body quando menu estiver aberto
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Fechar ao clicar em um link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Fechar ao clicar fora do menu
+        document.addEventListener('click', (e) => {
+            if (mobileMenu.classList.contains('active') && 
+                !mobileMenu.contains(e.target) && 
+                !mobileToggle.contains(e.target)) {
+                
+                mobileToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
 });
