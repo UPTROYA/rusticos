@@ -36,6 +36,7 @@ const Utils = {
         });
     },
 
+    // Apenas para strings simples, não para HTML estruturado
     sanitize: (str) => {
         const div = document.createElement('div');
         div.textContent = str;
@@ -48,6 +49,7 @@ const Utils = {
             let badgeClass = 'bg-black';
             if (badge === 'Mais Vendido' || badge === 'Picante') badgeClass = 'bg-red';
             if (badge === 'Exclusivo' || badge === 'Clássico') badgeClass = 'bg-gold';
+            // Usamos sanitize aqui pois isso será injetado via innerHTML no grid
             return `<span class="badge-item ${badgeClass}">${Utils.sanitize(badge)}</span>`;
         }).join('');
     }
@@ -67,7 +69,7 @@ const DOM = {
     filters: document.getElementById('filterContainer'),
     modal: {
         overlay: document.getElementById('productModal'),
-        close: document.querySelector('.modal-close'),
+        close: document.querySelector('#productModal .modal-close'),
         content: document.getElementById('modalContent'),
         img: document.getElementById('modalImg'),
         title: document.getElementById('modalTitle'),
@@ -79,14 +81,13 @@ const DOM = {
     },
     choice: {
         overlay: document.getElementById('choiceModal'),
-        close: document.querySelector('.choice-close'),
+        close: document.querySelector('#choiceModal .choice-close'),
         btnAnota: document.getElementById('btnChoiceAnotaAi'),
         btnWpp: document.getElementById('btnChoiceWhatsapp')
     },
     hero: {
         section: document.getElementById('hero'),
         img: document.querySelector('.hero-img-floating'),
-        tagText: document.querySelector('.float-tag span')
     },
     navBtn: document.getElementById('navOrderBtn'),
     mobileBtn: document.getElementById('mobileOrderBtn')
@@ -108,7 +109,7 @@ const MenuSystem = {
 
         DOM.filters.innerHTML = categories.map(cat => `
             <button class="filter-btn ${cat.id === CONFIG.defaultCategory ? 'active' : ''}" 
-                    data-id="${cat.id}" type="button">
+                    data-id="${cat.id}" type="button" aria-pressed="${cat.id === CONFIG.defaultCategory}">
                 <i class="fa-solid ${cat.icon}"></i> ${cat.label}
             </button>
         `).join('');
@@ -123,6 +124,7 @@ const MenuSystem = {
             return;
         }
 
+        // Mantido innerHTML para performance de renderização de lista, mas usamos sanitize e lazy loading
         DOM.grid.innerHTML = items.map(item => `
             <article class="menu-card" data-id="${item.id}" role="button" tabindex="0">
                 ${item.isBestSeller ? '<span class="card-badge-best" style="position:absolute; top:10px; right:10px; color:#DAA520;"><i class="fa-solid fa-star"></i></span>' : ''}
@@ -155,8 +157,14 @@ const MenuSystem = {
         DOM.filters.addEventListener('click', (e) => {
             const btn = e.target.closest('.filter-btn');
             if(!btn) return;
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-pressed', 'false');
+            });
             btn.classList.add('active');
+            btn.setAttribute('aria-pressed', 'true');
+            
             AppState.currentCategory = btn.dataset.id;
             this.renderGrid(AppState.currentCategory);
         });
@@ -165,11 +173,23 @@ const MenuSystem = {
             const card = e.target.closest('.menu-card');
             if(card) ModalSystem.open(Number(card.dataset.id));
         });
+
+        DOM.grid.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const card = e.target.closest('.menu-card');
+                if(card) {
+                    e.preventDefault();
+                    ModalSystem.open(Number(card.dataset.id));
+                }
+            }
+        });
     }
 };
 
 /* --- SYSTEM: CHOICE MODAL --- */
 const ChoiceSystem = {
+    previousActiveElement: null,
+
     init() {
         DOM.choice.close.addEventListener('click', () => this.close());
         
@@ -177,29 +197,30 @@ const ChoiceSystem = {
             if(e.target === DOM.choice.overlay) this.close();
         });
 
+        DOM.choice.overlay.addEventListener('keydown', (e) => {
+             if (e.key === 'Tab') this.handleTab(e);
+             if (e.key === 'Escape') this.close();
+        });
+
         // Configurar Anota AI (Link fixo)
         DOM.choice.btnAnota.href = CONFIG.anotaAiLink;
 
-        // Configurar Botões que abrem este modal (Navbar e Mobile)
-        if(DOM.navBtn) {
-            DOM.navBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.open(null); 
-            });
-        }
-        if(DOM.mobileBtn) {
-            DOM.mobileBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.open(null);
-            });
-        }
+        // Configurar Botões que abrem este modal
+        const openHandler = (e) => {
+            e.preventDefault();
+            this.open(null);
+        };
+
+        if(DOM.navBtn) DOM.navBtn.addEventListener('click', openHandler);
+        if(DOM.mobileBtn) DOM.mobileBtn.addEventListener('click', openHandler);
     },
 
     open(product = null) {
+        this.previousActiveElement = document.activeElement;
         let waLink = '';
         
         if (product) {
-            const message = `Olá Rústicos! Gostaria de pedir o *${product.name})`;
+            const message = `Olá Rústicos! Gostaria de pedir o *${product.name}*`;
             waLink = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
         } else {
             const message = `Olá Rústicos! Gostaria de fazer um pedido.`;
@@ -211,18 +232,47 @@ const ChoiceSystem = {
         DOM.choice.overlay.classList.add('active');
         DOM.choice.overlay.setAttribute('aria-hidden', 'false');
         if(!AppState.isModalOpen) document.body.style.overflow = 'hidden';
+
+        // Focus Trap
+        setTimeout(() => DOM.choice.close.focus(), 50);
     },
 
     close() {
         DOM.choice.overlay.classList.remove('active');
         DOM.choice.overlay.setAttribute('aria-hidden', 'true');
+        
+        // Só libera o scroll se o outro modal não estiver aberto
         if(!AppState.isModalOpen) document.body.style.overflow = '';
+        
+        if(this.previousActiveElement) {
+            this.previousActiveElement.focus();
+            this.previousActiveElement = null;
+        }
+    },
+
+    handleTab(e) {
+        const focusable = DOM.choice.overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey) {
+            if (document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            }
+        } else {
+            if (document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        }
     }
 };
 
 /* --- SYSTEM: PRODUCT MODAL --- */
 const ModalSystem = {
     currentItem: null,
+    previousActiveElement: null,
 
     init() {
         DOM.modal.close.addEventListener('click', () => this.close());
@@ -231,6 +281,7 @@ const ModalSystem = {
         });
         document.addEventListener('keydown', (e) => {
             if(AppState.isModalOpen && e.key === 'Escape') this.close();
+            if(AppState.isModalOpen && e.key === 'Tab') this.handleTab(e);
         });
 
         // Botão "Fazer Pedido" dentro do modal abre a escolha
@@ -246,27 +297,62 @@ const ModalSystem = {
         const item = menuItems.find(i => i.id === id);
         if(!item) return;
 
+        this.previousActiveElement = document.activeElement;
         this.currentItem = item;
         AppState.isModalOpen = true;
 
         DOM.modal.img.src = item.img;
+        DOM.modal.img.alt = item.name;
+        // Use textContent instead of innerHTML
         DOM.modal.cat.textContent = item.cat;
         DOM.modal.title.textContent = item.name;
         DOM.modal.desc.textContent = item.desc;
         DOM.modal.price.textContent = Utils.formatPrice(item.price);
+        
+        // Badges ainda precisam ser gerados como HTML para estrutura visual correta
         DOM.modal.badges.innerHTML = Utils.renderBadges(item.badges);
 
         DOM.modal.overlay.classList.add('active');
         DOM.modal.overlay.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
+
+        // Focus Trap Initial
+        setTimeout(() => DOM.modal.close.focus(), 50);
     },
 
     close() {
+        if (!AppState.isModalOpen) return;
+        
         AppState.isModalOpen = false;
         this.currentItem = null;
         DOM.modal.overlay.classList.remove('active');
         DOM.modal.overlay.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
+
+        if(this.previousActiveElement) {
+            this.previousActiveElement.focus();
+            this.previousActiveElement = null;
+        }
+    },
+
+    handleTab(e) {
+        const focusable = DOM.modal.overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        if (focusable.length === 0) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey) {
+            if (document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            }
+        } else {
+            if (document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        }
     }
 };
 
@@ -341,15 +427,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const mobileOrderBtn = document.getElementById('mobileOrderBtn');
 
     if (mobileToggle && mobileMenu) {
+        
+        // Listener otimizado: só ativo quando o menu está aberto
+        const closeMenuOnClickOutside = (e) => {
+            if (mobileMenu.classList.contains('active') && 
+                !mobileMenu.contains(e.target) && 
+                !mobileToggle.contains(e.target)) {
+                toggleMenu(true);
+            }
+        };
+
         function toggleMenu(forceClose = false) {
-            if (forceClose) {
+            const isActive = mobileMenu.classList.contains('active');
+            
+            if (forceClose || isActive) {
                 mobileToggle.classList.remove('active');
                 mobileMenu.classList.remove('active');
+                mobileToggle.setAttribute('aria-expanded', 'false');
                 document.body.style.overflow = '';
+                document.removeEventListener('click', closeMenuOnClickOutside);
             } else {
-                mobileToggle.classList.toggle('active');
-                mobileMenu.classList.toggle('active');
-                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+                mobileToggle.classList.add('active');
+                mobileMenu.classList.add('active');
+                mobileToggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+                // Adiciona o listener apenas quando abre
+                setTimeout(() => document.addEventListener('click', closeMenuOnClickOutside), 100);
             }
         }
 
@@ -367,14 +470,5 @@ document.addEventListener("DOMContentLoaded", () => {
         if(mobileOrderBtn) {
             mobileOrderBtn.addEventListener('click', () => toggleMenu(true));
         }
-        
-        // Fechar ao clicar fora
-        document.addEventListener('click', (e) => {
-            if (mobileMenu.classList.contains('active') && 
-                !mobileMenu.contains(e.target) && 
-                !mobileToggle.contains(e.target)) {
-                toggleMenu(true);
-            }
-        });
     }
 });
