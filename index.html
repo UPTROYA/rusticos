@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RUSTICOS | Premium Burgers</title>
     
-    <link rel="icon" type="image/png" href="img/logo.png">
+    <link rel="icon" type="image/png" href="img/logo.webp">
     <meta name="theme-color" content="#ffffff">
     <meta name="description" content="Gastronomia Brutalista. Hambúrgueres artesanais feitos na brasa.">
 
@@ -14,20 +14,53 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@300;400;600;800&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.29/dist/lenis.min.js" defer></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
 
-    <div class="modal-overlay" id="productModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="choice-overlay" id="choiceModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="choiceTitle">
+        <div class="choice-content">
+            <button class="choice-close" aria-label="Fechar janela de escolha"><i class="fa-solid fa-times" aria-hidden="true"></i></button>
+            <h3 class="choice-title" id="choiceTitle">COMO DESEJA PEDIR?</h3>
+            <p class="choice-desc">Escolha sua plataforma preferida para realizar o pedido.</p>
+            
+            <div class="choice-grid">
+                <a href="#" id="btnChoiceAnotaAi" class="choice-card-btn anota-style" target="_blank" rel="noopener noreferrer">
+                    <div class="choice-icon"><i class="fa-solid fa-rocket" aria-hidden="true"></i></div>
+                    <div class="choice-info">
+                        <span class="c-label">ANOTA AI</span>
+                        <span class="c-sub">Cardápio Digital Rápido</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right arrow-action" aria-hidden="true"></i>
+                </a>
+
+                <a href="#" id="btnChoiceWhatsapp" class="choice-card-btn wpp-style" target="_blank" rel="noopener noreferrer">
+                    <div class="choice-icon"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></div>
+                    <div class="choice-info">
+                        <span class="c-label">WHATSAPP</span>
+                        <span class="c-sub">Atendimento Personalizado</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right arrow-action" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="productModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitleStr">
         <div class="modal-content" id="modalContent">
-            <button class="modal-close" aria-label="Fechar Detalhes"><i class="fa-solid fa-times"></i></button>
+            <button class="modal-close" aria-label="Fechar Detalhes"><i class="fa-solid fa-times" aria-hidden="true"></i></button>
             
             <div class="modal-grid">
                 <div class="modal-img-wrapper">
-                    <img src="" alt="" id="modalImg" draggable="false">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Imagem do Produto" id="modalImg" draggable="false" loading="lazy">
                 </div>
                 <div class="modal-info">
                     <span class="modal-cat" id="modalCat"></span>
-                    <h2 class="modal-title" id="modalTitle"></h2>
+                    <h2 class="modal-title" id="modalTitleStr"></h2>
                     <p class="modal-desc" id="modalDesc"></p>
                     <div class="modal-badges" id="modalBadges"></div>
                 </div>
@@ -38,12 +71,21 @@
                     <span style="font-size: 0.8rem; display:block; color:#888;">Valor</span>
                     <span class="modal-price-sticky" id="modalPrice"></span>
                 </div>
+                
                 <div class="cta-box">
-                    <a href="https://pedido.anota.ai/loja/_rustico_burguer?f=ms" class="btn-whatsapp" id="modalBtn" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-solid fa-bag-shopping"></i> 
-                        <span>FAZER PEDIDO</span>
-                    </a>
-                    <span class="trust-text"><i class="fa-solid fa-rocket"></i> Pedido Rápido via Anota Ai</span>
+                    <button type="button" class="wpp-super-btn" id="modalBtnAction">
+                        <div class="super-icon">
+                            <i class="fa-solid fa-utensils" aria-hidden="true"></i>
+                        </div>
+                        <div class="super-info">
+                            <span class="super-label">FAZER PEDIDO</span>
+                            <span class="super-sub">Escolha a forma de pagamento</span>
+                        </div>
+                        <div class="super-arrow">
+                            <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+                        </div>
+                    </button>
+                    <span class="trust-text"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Compra segura garantida</span>
                 </div>
             </div>
         </div>
@@ -51,22 +93,55 @@
 
     <div class="noise-bg"></div>
 
-    <div class="preloader">
-        <img src="img/logo.png" alt="Carregando Rusticos" class="loader-img">
+    <div class="preloader" id="preloader">
+        <img src="img/logo.webp" alt="Carregando Rusticos" class="loader-img" width="120" height="120">
     </div>
 
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="container nav-container">
-            <a href="#" class="logo-link" aria-label="Ir para o início">
-                <img src="img/logo.png" alt="Rusticos Logo" class="nav-logo">
-            </a>
-            <div class="nav-links">
-                <a href="#hero">Início</a>
-                <a href="#about">Filosofia</a>
-                <a href="#menu" class="active-link">Cardápio</a>
-                <a href="#location">Local</a>
+            <div class="nav-left">
+                <a href="#" class="logo-link" aria-label="Ir para o início">
+                    <img src="img/logo.webp" alt="Rusticos Logo" class="nav-logo" width="45" height="45">
+                </a>
             </div>
-            <a href="https://pedido.anota.ai/loja/_rustico_burguer?f=ms" target="_blank" class="btn-primary" aria-label="Ir para o cardápio online">PEDIR ONLINE</a>
+            
+            <div class="nav-center desktop-only">
+                <a href="#hero" class="nav-link">
+                    <span>Início</span>
+                </a>
+                <a href="#about" class="nav-link">
+                    <span>Filosofia</span>
+                </a>
+                <a href="#menu" class="nav-link">
+                    <span>Cardápio</span>
+                </a>
+                <a href="#location" class="nav-link">
+                    <span>Local</span>
+                </a>
+            </div>
+
+            <div class="nav-right">
+                <button type="button" class="nav-wpp-btn desktop-only" id="navOrderBtn" aria-label="Fazer Pedido">
+                    <span class="wpp-icon-box"><i class="fa-solid fa-bag-shopping" aria-hidden="true"></i></span>
+                    <span class="wpp-text">FAZER PEDIDO</span>
+                </button>
+
+                <button class="mobile-toggle" aria-label="Abrir Menu" aria-expanded="false" aria-controls="mobileMenu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+            <div class="mobile-links">
+                <a href="#hero" class="mobile-link-item">Início</a>
+                <a href="#about" class="mobile-link-item">Filosofia</a>
+                <a href="#menu" class="mobile-link-item">Cardápio</a>
+                <a href="#location" class="mobile-link-item">Local</a>
+                <button type="button" id="mobileOrderBtn" class="btn-primary" style="margin-top: 20px; width: 100%;">FAZER PEDIDO</button>
+            </div>
         </div>
     </nav>
 
@@ -92,8 +167,7 @@
                     </p>
                     
                     <div class="hero-actions reveal-hero">
-                        <a href="https://pedido.anota.ai/loja/_rustico_burguer?f=ms" target="_blank" class="btn-primary">PEDIR AGORA</a>
-                        <a href="#about" class="btn-secondary">CONHECER</a>
+                        <a href="#about" class="btn-secondary">CONHECER A CASA</a>
                     </div>
                 </div>
                 
@@ -114,12 +188,12 @@
                         </div>
 
                         <div class="hero-img-wrapper" id="heroImgWrapper">
-                            <img src="img/hero-burger.webp" alt="Burger Premium Signature" class="hero-img-floating" fetchpriority="high">
+                            <img src="img/hero-burger.webp" alt="Burger Premium Signature" class="hero-img-floating" fetchpriority="high" width="600" height="600">
                         </div>
                         
                         <div class="floating-tag-premium" data-speed="0.2">
-                           <i class="fa-solid fa-crown"></i>
-                           <span>Signature 180g</span>
+                           <i class="fa-solid fa-crown" aria-hidden="true"></i>
+                            <span>Signature 180g</span>
                         </div>
                     </div>
                 </div>
@@ -148,7 +222,7 @@
                 <div class="philosophy-grid">
                     <div class="philosophy-card">
                         <div class="card-icon">
-                            <i class="fa-solid fa-wheat-awn"></i>
+                            <i class="fa-solid fa-wheat-awn" aria-hidden="true"></i>
                         </div>
                         <h3>Ingredientes com Alma</h3>
                         <p>Não aceitamos o "básico". Nossos vegetais são frescos, o blend é moído diariamente e os molhos são receitas secretas da casa.</p>
@@ -156,7 +230,7 @@
         
                     <div class="philosophy-card">
                         <div class="card-icon">
-                            <i class="fa-solid fa-fire-burner"></i>
+                            <i class="fa-solid fa-fire-burner" aria-hidden="true"></i>
                         </div>
                         <h3>Fogo e Paixão</h3>
                         <p>Acreditamos no poder da brasa. O ponto da carne é sagrado e o queijo derretido é a nossa assinatura de qualidade inegociável.</p>
@@ -164,7 +238,7 @@
         
                     <div class="philosophy-card">
                         <div class="card-icon">
-                            <i class="fa-solid fa-users-line"></i>
+                            <i class="fa-solid fa-users-line" aria-hidden="true"></i>
                         </div>
                         <h3>Experiência Real</h3>
                         <p>Criamos um ambiente para você se sentir em casa. Música boa, cerveja gelada e um atendimento que olha no olho.</p>
@@ -180,15 +254,17 @@
                     <h2 class="section-title">O ACERVO</h2>
                 </div>
                 
-                <div class="filter-container" role="tablist" id="filterContainer"></div>
+                <div class="filter-container" role="tablist" id="filterContainer">
+                    </div>
                 
-                <div class="menu-grid" id="menuGrid"></div>
+                <div class="menu-grid" id="menuGrid">
+                    </div>
             </div>
         </section>
 
         <section id="location" class="location-section">
              <div class="map-half">
-                <iframe title="Mapa Rusticos" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3830.4080138267122!2d-47.9555277!3d-16.250845899999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935999aaa7bd35c5%3A0xa5bec32023069a0!2sR%C3%BAsticos%20Burger!5e0!3m2!1spt-PT!2sbr!4v1767743555573!5m2!1spt-PT!2sbr" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <iframe title="Mapa Rusticos" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3831.334188448766!2d-47.935406!3d-16.229193!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTbCsDEzJzQ1LjEiUyA0N8KwNTYnMDcuNSJX!5e0!3m2!1spt-BR!2sbr!4v1680000000000!5m2!1spt-BR!2sbr" style="border:0; width:100%; height:100%;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
             <div class="info-half">
                 <div class="info-content">
@@ -203,7 +279,7 @@
                         <p>Aberto todos os dias</p>
                         <p class="highlight">17:00 às 23:00</p>
                     </div>
-                    <a href="https://maps.google.com" target="_blank" class="btn-outline-dark">TRAÇAR ROTA</a>
+                    <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="btn-outline-dark">TRAÇAR ROTA</a>
                 </div>
             </div>
         </section>
@@ -211,10 +287,10 @@
         <footer class="main-footer">
             <div class="container">
                 <div class="footer-content">
-                    <img src="img/logo.png" alt="Rusticos" class="footer-logo">
+                    <img src="img/logo.webp" alt="Rusticos" class="footer-logo" loading="lazy" width="150" height="50">
                     <div class="social-links">
-                        <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="https://wa.me/5561910181201?partnertoken=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJHb29nbGUiLCJleHAiOjE3NjczNjY4MTUsInVybCI6Imh0dHBzOi8vd2EubWUvNTU2MTkxMDE4MTIwMSIsImlhdCI6MTc2NzM2NjUxNX0.Jo5ImwgwNQDbzUkekqQ94wUiZUxnKXUDdLyQz0rtf_X5eKzChkDwA5lQ6CXTPj7A1EWBA7xo_dAqHB3K4LDPHw" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/_rusticosburguer/" target="_blank" rel="noopener noreferrer" aria-label="Visite nosso Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+                        <a href="https://wa.me/5561910181201" target="_blank" rel="noopener noreferrer" aria-label="Fale conosco no WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
                     </div>
                     <p class="copyright">© 2025 RUSTICOS CONCEPT. Todos os direitos reservados.</p>
                 </div>
@@ -222,10 +298,5 @@
         </footer>
 
     </main>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
-    <script src="script.js"></script>
 </body>
 </html>
